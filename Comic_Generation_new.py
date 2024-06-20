@@ -238,12 +238,24 @@ unet.set_attn_processor(copy.deepcopy(attn_procs))
 global mask1024, mask4096
 mask1024, mask4096 = cal_attn_mask_xl(total_length, id_length, sa32, sa64, height, width, device=device, dtype=torch.float16)
 
+
+###############################
+'''
+- Set the guidance scale for the diffusion process, higher values tighten adherence to the prompt
+- Seed for random number generation to ensure reproducibility; 57 was found to yield the best results in tests
+- Initial scale factor for 32x32 segments in attention processing, later adjusted to 0.99 for finer details
+- Initial scale factor for 64x64 segments in attention processing, later adjusted to 0.99 for finer details
+- Number of identity embeddings used in attention mechanisms to maintain consistent character features
+- Number of steps in the diffusion process, balancing between generation quality and computation time. 50-50 epochs works the best. 
+'''
+
 guidance_scale = 4 #5
 seed = 57 #57 worked best
 sa32 = 0.5 #0.99
 sa64 = 0.5 #0.99
 id_length = 4
 num_steps = 50
+###############################
 
 def apply_style_positive(style_name: str, positive: str):
     p, n = styles.get(style_name, styles[DEFAULT_STYLE_NAME])
@@ -315,9 +327,9 @@ def generate_comic_from_file(file_path, output_pdf_path, output_img_dir):
 
 # Load Backblaze credentials from files
 def load_backblaze_credentials():
-    with open('/home/rjayanth/StoryDiffusion/backblaze.txt', 'r') as backblaze:
+    with open('/path/to/backblaze.txt', 'r') as backblaze:
         backblaze_key = backblaze.read().strip()
-    with open('/home/rjayanth/StoryDiffusion/backblaze_id.txt', 'r') as backblaze:
+    with open('/path/to/backblaze_id.txt', 'r') as backblaze:
         backblaze_id = backblaze.read().strip()
     return backblaze_id, backblaze_key
 
@@ -337,13 +349,13 @@ def upload_file_to_backblaze(b2_api, bucket_name, local_file_path, remote_file_p
     print(f"Uploaded {local_file_path} to {bucket_name}/{remote_file_path}")
 
 def main():
-    base_prompt_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_supercat'
-    base_image_dir = '/home/rjayanth/StoryDiffusion/generated_images_supercat'
-    output_dir = 'StoryDiffusion/outputs_supercat'
+    base_prompt_dir = './generated_prompts'
+    base_image_dir = './generated_images'
+    output_dir = './outputs'
     os.makedirs(output_dir, exist_ok=True)
 
     b2_api = authorize_backblaze()
-    bucket_name = 'dream-tails'
+    bucket_name = '(BUCKET NAME)'
 
     # Process each volume
     for volume_number in range(20):  # Adjust the range as needed
@@ -357,13 +369,13 @@ def main():
         generate_comic_from_file(prompt_file_path, output_pdf_path, output_img_dir)
 
         # Upload PDF to Backblaze
-        remote_pdf_path = f"supercat_volume_{volume_number}/story_{volume_number}.pdf"
+        remote_pdf_path = f"/path/to/story_{volume_number}/story_{volume_number}.pdf"
         upload_file_to_backblaze(b2_api, bucket_name, output_pdf_path, remote_pdf_path)
 
         # Upload images to Backblaze
         for img_file in os.listdir(output_img_dir):
             local_img_path = os.path.join(output_img_dir, img_file)
-            remote_img_path = f"supercat_volume_{volume_number}/{img_file}"
+            remote_img_path = f"/path/to/story_{volume_number}/{img_file}"
             upload_file_to_backblaze(b2_api, bucket_name, local_img_path, remote_img_path)
 
 if __name__ == "__main__":

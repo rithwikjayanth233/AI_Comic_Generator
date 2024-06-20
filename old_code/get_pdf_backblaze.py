@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Load Backblaze credentials from files
-with open('/home/rjayanth/StoryDiffusion/backblaze.txt', 'r') as backblaze:
+with open('/path/to/backblaze.txt', 'r') as backblaze:
     backblaze_key = backblaze.read().strip()
-with open('/home/rjayanth/StoryDiffusion/backblaze_id.txt', 'r') as backblaze:
+with open('/path/to/backblaze_id.txt', 'r') as backblaze:
     backblaze_id = backblaze.read().strip()
 
 # Authorize Backblaze account

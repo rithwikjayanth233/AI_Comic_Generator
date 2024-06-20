@@ -7,7 +7,7 @@ def load_api_key(file_path):
         return file.read().strip()
 
 # Path to the file containing the OpenAI API key
-api_key_file = '/home/rjayanth/StoryDiffusion/gpt_key.txt'
+api_key_file = '/path/to/gpt_key.txt'
 api_key = load_api_key(api_key_file)
 
 # Initialize OpenAI client with the loaded API key
@@ -82,8 +82,8 @@ def save_final_prompts(general_prompt, detailed_prompts, output_path):
 
 # Main function
 def main():
-    base_dir = '/home/rjayanth/StoryDiffusion/backblaze_prompts'  # Updated path for the example
-    output_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_new'
+    base_dir = '/path/to/backblaze_prompts'  # Updated path for the example
+    output_dir = '/path/to/generated_prompts_new'
     os.makedirs(output_dir, exist_ok=True)
 
     # Process each volume

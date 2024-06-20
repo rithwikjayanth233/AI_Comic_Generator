@@ -51,6 +51,6 @@ def delete_files(bucket_name, prefix_filter):
         print(f"Total files deleted in {prefix}: {files_deleted}")
 
 if __name__ == "__main__":
-    bucket_name = '(BUCKET NAME)'  # Your bucket name
-    prefix_filter = '(BUCKET DIRECTORY)'  # Prefix to match subfolders
+    bucket_name = '(BUCKET NAME)'  # Your bucket name like dream_tails
+    prefix_filter = '(BUCKET DIRECTORY)'  # Prefix to match subfolders like supercat_volume_, space_tails_
     delete_files(bucket_name, prefix_filter)
