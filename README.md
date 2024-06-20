@@ -26,6 +26,17 @@ We welcome contributions from the community, whether they are bug fixes, improve
 This project is licensed under the terms of the MIT license.
 
 
+**Acknowledgments**
+
+This repository for Dream Tails utilizes methods and insights developed by the StoryDiffusion initiative, particularly in advancing our text-to-image diffusion technologies. We acknowledge and appreciate the foundational work provided by StoryDiffusion, which has been crucial in the development of our innovative content creation tools within the Dream Tails project.
+
+For further details on StoryDiffusion and their contributions to the field, please visit their official website:
+StoryDiffusion
+
+We are also thankful to all the open-source communities and contributors whose tools and libraries have been instrumental in facilitating our project's progress.
+
+
+
 **Contact**
 
 For more information, questions, or partnership inquiries, please contact the project maintainers at rjayanth@andrew.cmu.edu.
