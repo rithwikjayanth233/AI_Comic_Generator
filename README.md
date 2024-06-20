@@ -1,6 +1,6 @@
 **Dream Tails: AI-Driven Comic Generation**
 
-Welcome to the official GitHub repository for the Dream Tails and Dream Pods projects, innovative AI initiatives under the Mechanical and AI Lab at Carnegie Mellon University. 
+Welcome to the official GitHub repository for the Dream Tails project, as well as innovative AI initiatives under the Mechanical and AI Lab at Carnegie Mellon University. 
 These projects leverage cutting-edge machine learning techniques to transform textual descriptions into dynamic visual and audio media, fostering new ways to interact with digital content.
 
 
