@@ -24,6 +24,7 @@ cd AI_Comic_Generator
 Create a Python virtual environment to manage dependencies separately from your system Python. You can do this by running:
 ```
 python -m venv venv
+acitvate venv
 ```
 
 ### 3. Download requirements.txt
@@ -44,9 +45,9 @@ python backblaze_2_final_prompts.py
 
 ### 6. Delete previous outputs
 To remove previously generated images and PDFs from Backblaze, execute:
-'''
+```
 python delete_files_backblaze.py
-'''
+```
 
 ### 7. Generate the comic
 Finally, generate the comic based on the newly created prompts by running:
