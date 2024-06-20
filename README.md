@@ -55,17 +55,17 @@ python comic_generation_new.py
 ```
 
 
-**Contributions**
+### Contributions
 
 We welcome contributions from the community, whether they are bug fixes, improvements, or new features. Please refer to our contribution guidelines before making a pull request.
 
 
-**License**
+### License
 
 This project is licensed under the terms of the MIT license.
 
 
-**Acknowledgments**
+### Acknowledgments
 
 This repository for Dream Tails utilizes methods and insights developed by the StoryDiffusion initiative, particularly in advancing our text-to-image diffusion technologies. We acknowledge and appreciate the foundational work provided by StoryDiffusion, which has been crucial in the development of our innovative content creation tools within the Dream Tails project.
 
@@ -76,7 +76,7 @@ We are also thankful to all the open-source communities and contributors whose t
 
 
 
-**Contact**
+### Contact
 
 For more information, questions, or partnership inquiries, please contact the project maintainers at rjayanth@andrew.cmu.edu.
 
