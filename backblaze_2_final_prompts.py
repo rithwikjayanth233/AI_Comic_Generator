@@ -12,20 +12,22 @@ def load_api_key(file_path):
         return file.read().strip()
 
 # Path to the file containing the OpenAI API key
-api_key_file = '/home/rjayanth/StoryDiffusion/gpt_key.txt'
+api_key_file = '/path/to/gpt_key'
 api_key = load_api_key(api_key_file)
 
 # Initialize OpenAI client with the loaded API key
 openai.api_key = api_key
 
 
+#removed_prompts stores irrelevant prompts
 removed_prompts = [
-    
-
 ]
 
-# Function to generate text prompts using ChatGPT API
+# Function to generate text prompts using ChatGPT API.
 def generate_prompts(story_text, page_num):
+    '''
+    StoryDiffusion expects a General Prompt and Detailed Prompts (See description in instructions below). 
+    '''
     instructions = f"""
     Generate a general prompt and {page_num} detailed prompts based on the following story:
     
@@ -107,14 +109,14 @@ def download_and_combine_text_files(b2_api, bucket_name, bucket_directory, outpu
 
 # Main function
 def main():
-    base_dir = '/home/rjayanth/StoryDiffusion/backblaze_prompts_unicorninja'
-    output_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_unicorninja'
+    base_dir = '/path/to/backblaze_prompts'
+    output_dir = '/path/to/generated_prompts'
     os.makedirs(output_dir, exist_ok=True)
 
     # Load Backblaze credentials
-    with open('/home/rjayanth/StoryDiffusion/backblaze.txt', 'r') as backblaze:
+    with open('/path/to/backblaze.txt', 'r') as backblaze:
         backblaze_key = backblaze.read().strip()
-    with open('/home/rjayanth/StoryDiffusion/backblaze_id.txt', 'r') as backblaze:
+    with open('/path/to/backblaze_id.txt', 'r') as backblaze:
         backblaze_id = backblaze.read().strip()
 
     # Authorize Backblaze account
@@ -124,8 +126,8 @@ def main():
 
     # Process each volume
     for volume_number in range(20):  # Adjust the range as needed
-        bucket_name = 'dream-tails'
-        bucket_directory = f'unicorninja_{volume_number}/'
+        bucket_name = '(ENTER BUCKET NAME)'
+        bucket_directory = f'(ENTER BUCKET DIRECTORY)_{volume_number}/'
         combined_txt_path = f"{base_dir}/output_story_combined_volume_{volume_number}.txt"
         output_file_path = f"{output_dir}/generated_prompts_volume_{volume_number}.txt"
 
