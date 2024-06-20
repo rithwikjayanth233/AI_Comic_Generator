@@ -3,9 +3,9 @@ from b2sdk.v1 import InMemoryAccountInfo, B2Api
 
 def load_backblaze_credentials():
     # Load credentials from files securely
-    with open('/home/rjayanth/StoryDiffusion/backblaze_id.txt', 'r') as file:
+    with open('/path/to/backblaze_id.txt', 'r') as file:
         backblaze_id = file.read().strip()  # Read and strip any extra whitespace/newlines
-    with open('/home/rjayanth/StoryDiffusion/backblaze.txt', 'r') as file:
+    with open('/path/to/backblaze.txt', 'r') as file:
         backblaze_key = file.read().strip()  # Read and strip any extra whitespace/newlines
     return backblaze_id, backblaze_key
 
@@ -51,6 +51,6 @@ def delete_files(bucket_name, prefix_filter):
         print(f"Total files deleted in {prefix}: {files_deleted}")
 
 if __name__ == "__main__":
-    bucket_name = 'dream-tails'  # Your bucket name
-    prefix_filter = 'unicorninja_'  # Prefix to match subfolders
+    bucket_name = '(BUCKET NAME)'  # Your bucket name
+    prefix_filter = '(BUCKET DIRECTORY)'  # Prefix to match subfolders
     delete_files(bucket_name, prefix_filter)
