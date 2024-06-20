@@ -9,6 +9,8 @@ import torch
 import requests
 import random
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 import sys
 import pickle
 from PIL import Image
@@ -34,7 +36,7 @@ from utils.style_template import styles
 
 ## Global
 STYLE_NAMES = list(styles.keys())
-DEFAULT_STYLE_NAME = "(No style)"
+DEFAULT_STYLE_NAME = "Pixar/Disney Character"
 MAX_SEED = np.iinfo(np.int32).max
 global models_dict
 use_va = False
@@ -311,8 +313,8 @@ attn_procs = {}
 ###
 write = False
 ### strength of consistent self-attention: the larger, the stronger
-sa32 = 0.5
-sa64 = 0.5
+sa32 = 2
+sa64 = 2
 ### Res. of the Generated Comics. Please Note: SDXL models may do worse in a low-resolution! 
 height = 768
 width = 768
@@ -323,7 +325,8 @@ sd_model_path = models_dict["RealVision"] #"SG161222/RealVisXL_V4.0"
 ### LOAD Stable Diffusion Pipeline
 pipe = StableDiffusionXLPipeline.from_pretrained(sd_model_path, torch_dtype=torch.float16, use_safetensors=False)
 pipe = pipe.to(device)
-pipe.enable_freeu(s1=0.6, s2=0.4, b1=1.1, b2=1.2)
+# pipe.enable_freeu(s1=0.6, s2=0.4, b1=1.1, b2=1.2)
+pipe.enable_freeu(s1=1.6, s2=1.4, b1=1.1, b2=1.2)
 pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
 pipe.scheduler.set_timesteps(50)
 unet = pipe.unet
@@ -350,14 +353,14 @@ unet.set_attn_processor(copy.deepcopy(attn_procs))
 global mask1024,mask4096
 mask1024, mask4096 = cal_attn_mask_xl(total_length,id_length,sa32,sa64,height,width,device=device,dtype= torch.float16)
 
-guidance_scale = 3
-seed = 2047#47 worked well
-sa32 = 0.5
-sa64 = 0.5
+guidance_scale = 5
+seed = 27#47 worked well
+sa32 = 2
+sa64 = 2
 id_length = 4
-num_steps = 60
+num_steps = 50
 # general_prompt = "three superhero white cat with green eyes with a yellow cape "
-negative_prompt = "naked, deformed, bad anatomy, wavy buttons, wavy screens, text, letters, low detail, less detail, bad detail, bad screen, text bubble, dialogue, dialogues, disfigured, poorly drawn face, mutation, extra limb, ugly, disgusting, poorly drawn hands, missing limb, extra limb, extra tail, floating limbs, disconnected limbs, blurry, watermarks, oversaturated, distorted hands"
+negative_prompt = "high contrast, high sharpness, naked, deformed, bad anatomy, wavy buttons, wavy screens, text, letters, low detail, less detail, bad detail, bad screen, text bubble, dialogue, dialogues, disfigured, poorly drawn face, mutation, extra limb, ugly, disgusting, poorly drawn hands, missing limb, extra limb, extra tail, floating limbs, disconnected limbs, blurry, watermarks, oversaturated, distorted hands"
 
 # prompt_array = [
 #     "and superhero racoon exploring the underwater city of Atlantis with a black racoon",
@@ -369,7 +372,7 @@ negative_prompt = "naked, deformed, bad anatomy, wavy buttons, wavy screens, tex
 # ]
 
 # Path to the text file
-file_path = "/home/rjayanth/StoryDiffusion/generated_prompts/generated_prompts_volume_0.txt"
+file_path = "/home/rjayanth/StoryDiffusion/generated_prompts_dino/generated_prompts_volume_1.txt"
 
 # Initialize variables to hold the general prompt and detailed prompts
 general_prompt = ""
@@ -417,7 +420,9 @@ def apply_style(style_name: str, positives: list, negative: str = ""):
     p, n = styles.get(style_name, styles[DEFAULT_STYLE_NAME])
     return [p.replace("{prompt}", positive) for positive in positives], n + ' ' + negative
 ### Set the generated Style
-style_name = "Comic book"
+
+###########################################################################################################################################
+style_name = "Pixar/Disney Character"
 setup_seed(seed)
 generator = torch.Generator(device="cuda").manual_seed(seed)
 prompts = [general_prompt+","+prompt for prompt in prompt_array]
@@ -441,9 +446,9 @@ for real_prompt in real_prompts:
 # for real_image in real_images:
 #     display(real_image)  
 
-output_dir = "StoryDiffusion/outputs"
+output_dir = "/home/rjayanth/StoryDiffusion/outputs_dino"
 os.makedirs(output_dir, exist_ok=True)
-pdf_path = os.path.join(output_dir, "story_0.pdf")
+pdf_path = os.path.join(output_dir, "story_1.pdf")
 
 all_images = id_images + real_images
 all_images[0].save(pdf_path, save_all=True, append_images=all_images[1:], quality=95)

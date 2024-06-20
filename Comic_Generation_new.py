@@ -239,10 +239,10 @@ unet.set_attn_processor(copy.deepcopy(attn_procs))
 global mask1024, mask4096
 mask1024, mask4096 = cal_attn_mask_xl(total_length, id_length, sa32, sa64, height, width, device=device, dtype=torch.float16)
 
-guidance_scale = 5
+guidance_scale = 4 #5
 seed = 57 #57 worked best
-sa32 = 0.5
-sa64 = 0.5
+sa32 = 0.5 #0.99
+sa64 = 0.5 #0.99
 id_length = 4
 num_steps = 50
 
@@ -338,9 +338,9 @@ def upload_file_to_backblaze(b2_api, bucket_name, local_file_path, remote_file_p
     print(f"Uploaded {local_file_path} to {bucket_name}/{remote_file_path}")
 
 def main():
-    base_prompt_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_dino'
-    base_image_dir = '/home/rjayanth/StoryDiffusion/generated_images_dino'
-    output_dir = 'StoryDiffusion/outputs_dino'
+    base_prompt_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_supercat'
+    base_image_dir = '/home/rjayanth/StoryDiffusion/generated_images_supercat'
+    output_dir = 'StoryDiffusion/outputs_supercat'
     os.makedirs(output_dir, exist_ok=True)
 
     b2_api = authorize_backblaze()
@@ -358,13 +358,13 @@ def main():
         generate_comic_from_file(prompt_file_path, output_pdf_path, output_img_dir)
 
         # Upload PDF to Backblaze
-        remote_pdf_path = f"dyno_tails_{volume_number}/story_{volume_number}.pdf"
+        remote_pdf_path = f"supercat_volume_{volume_number}/story_{volume_number}.pdf"
         upload_file_to_backblaze(b2_api, bucket_name, output_pdf_path, remote_pdf_path)
 
         # Upload images to Backblaze
         for img_file in os.listdir(output_img_dir):
             local_img_path = os.path.join(output_img_dir, img_file)
-            remote_img_path = f"dyno_tails_{volume_number}/{img_file}"
+            remote_img_path = f"supercat_volume_{volume_number}/{img_file}"
             upload_file_to_backblaze(b2_api, bucket_name, local_img_path, remote_img_path)
 
 if __name__ == "__main__":

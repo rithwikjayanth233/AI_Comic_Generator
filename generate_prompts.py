@@ -16,13 +16,14 @@ openai.api_key = api_key
 # Function to generate text prompts using ChatGPT API
 def generate_prompts(story_text):
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that generates text prompts for a text-to-image diffusion model. Ensure the prompts generated are detailed and simple for the text-to-image diffusion model."},
             {"role": "user", "content": f"Generate a general prompt and a series of detailed prompts from the following story: {story_text}. Ensure the prompts are suitable for a text-to-image diffusion model. Include a small description next to any mentioned person or animal to help the diffusion model understand the characters well. Split the general prompt and detailed prompts into two sections."}
         ]
     )
     return response.choices[0].message['content']
+
 
 # Function to read story text from a file
 def read_story(file_path):
@@ -37,7 +38,7 @@ def save_prompts(prompts, output_path):
 # Main function
 def main():
     base_dir = '/home/rjayanth/StoryDiffusion/backblaze_prompts'  # Updated path for the example
-    output_dir = '/home/rjayanth/StoryDiffusion/generated_prompts'
+    output_dir = '/home/rjayanth/StoryDiffusion/generated_prompts_dino'
     os.makedirs(output_dir, exist_ok=True)
 
     # Process each volume
