@@ -13,7 +13,46 @@ This work supports a variety of applications, from educational tools to entertai
 
 **Getting Started**
 
+### 1. Clone the repository
+First, clone the repository to your local machine using the following command:
+```
+git clone https://github.com/rithwikjayanth233/AI_Comic_Generator.git
+cd AI_Comic_Generator
+```
 
+### 2. Create a virtual environment
+Create a Python virtual environment to manage dependencies separately from your system Python. You can do this by running:
+```
+python -m venv venv
+```
+
+### 3. Download requirements.txt
+```
+pip install -r requirements.txt
+
+```
+
+### 4. Obtain a GPT-4 Subscription
+Ensure you have access to OpenAI's GPT-4 model. Subscribe and obtain an API key from [OpenAI's platform](https://platform.openai.com/).
+
+
+### 5. Run the script to generate new prompts
+Generate new comic prompts from the storyline by running the following script:
+```
+python backblaze_2_final_prompts.py
+```
+
+### 6. Delete previous outputs
+To remove previously generated images and PDFs from Backblaze, execute:
+'''
+python delete_files_backblaze.py
+'''
+
+### 7. Generate the comic
+Finally, generate the comic based on the newly created prompts by running:
+```
+python comic_generation_new.py
+```
 
 
 **Contributions**
